@@ -1,0 +1,29 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:five="http://namespaces.zope.org/five"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    xmlns:grok="http://namespaces.zope.org/grok"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    i18n_domain="itd.vidbase">
+
+
+    <!-- Include configuration for dependencies listed in setup.py -->
+    <includeDependencies package="." />
+
+    <!-- gimme some skins, yo! -->
+    <include file="skins.zcml" />
+
+    <!-- Grok the package to initialize schema interfaces and content classes -->
+    <grok:grok package="." />
+
+
+  <genericsetup:registerProfile
+      name="default"
+      title="itd.vidbase"
+      directory="profiles/default"
+      description="Installs the itd.vidbase package"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+  <!-- -*- extra stuff goes here -*- -->
+
+</configure>
