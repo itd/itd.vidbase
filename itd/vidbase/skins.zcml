@@ -4,7 +4,10 @@
     i18n_domain="itd.vidbase">
 
   <!-- File System Directory Views registration -->
-  <cmf:registerDirectory name="itd_vidbase"/>
-  
+   <cmf:registerDirectory name="skins"
+    directory="skins"
+    recursive="True"
+    />
+
 
 </configure>
