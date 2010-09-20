@@ -1,0 +1,147 @@
+Things To Do
+=============
+
+itdvideo
+----------
+
+* Add showdate field
+* populate default date to datetime.datetime.today()
+* populate default title = %B %d %y
+    e.g., u"January, 01, 2011"
+* Set default state to "Published"
+
+
+itdvideofolder
+---------------
+
+* Add a "limit" field. Used to limit the number
+  of items in a folder's feeds. A "O" or empty
+  field means no limit.
+
+* Create "byShowDate.xml"
+  - sort on itdvideo's showdate field.
+
+* Create "byFolderOrder.xml" view.
+ - renders the xml set in the folder order.
+
+* Create "byFolderOrderReversed.xml" view.
+ - renders the xml in reverse order as displayed
+   in the folder.
+
+* only itdvideo content in the "Published" state
+  are to be included.
+
+The xml feeds include the two fields, title
+and enclosure.
+
+The enclosure field is composed of
+ 1. itdvideofolder targeturl
+ 2. itdvideo.videofile.filename
+ 3. itdvideofolder targeturlsuffix
+
+Here's an example of how it's composed:
+
+  <span
+   tal:replace="context/targeturl"
+   /><span
+   tal:replace="vid/itdvideofile/filename"
+   /><span
+   tal:replace="context/targeturlsuffix"
+   />
+
+And it'll look like this:
+
+  http://media1.lotteryvideo.com/kyod/mp4:ky20100827.m4v/playlist.m3u8"/>
+
+
+Pushing XML and Files
+========================
+The goal is to off-load serving the XML to Apache
+and the media to a streaming media server.
+
+There are two ways to handle this: push, or pull.
+
+We need to pick one that'll be the most
+durable /bulletproof.
+
+
+Here are some ideas I have. What's your opinion?
+
+
+Push method
+--------------
+- via zope.lifecycleevent.interfaces.IObject***Event
+
+When content in an itdvideofolder is added, edited,
+modified, or deleted, the folder's XML feeds could
+be pushed to a target server or directory.
+
+Also, when an individual itdvideo object is created,
+modified, or deleted, an event could be triggered
+to push the modified file data to a target server
+or directory. For now, assume IObjectMovedEvent will
+never happen.
+
+I have some code I've used successfully that hooks
+pyinotify, watching a directory and copying files
+to a target server on a file.close event. We could
+use that, or fire an event directly from Plone. If
+we fire from plone, we would probably want to add
+a few more fields to itdvideofolder to enable the
+transfer option and include the target server url
+and path information. This would happen via SSH
+and we'll assume that I would setup SSH keys to handle
+"passwordless" transfers (There's no way I'm putting
+userIDs and/or passwords in a Plone content type.)
+We will need to write the methods to do the transfers,
+and figure out how to make Plone/Zope trigger the
+transfers.
+
+
+Pull method via external python scripts
+---------------------------------------
+This can get messy, but could be easy enough to
+implement a basic woring solution.
+
+We'd need one script to get the XML files,
+and another to get the file data.
+
+Here are some ideas on this...
+
+getxml.py
+---------
+A python script that has a list of URLs
+that point to the various itdvideofolder *.xml feeds
+and a local target download directory path.
+The script downloads those feeds to the target dir.
+
+- Fired via crontab
+- if the feeds don't respond, don't overwrite the
+  existing file(s).
+
+
+getsourcefiles.py
+-------------------
+A script that gracefully gets files from an itdvideofolder,
+and places them in a target directory on the local machine.
+
+
+Phase 1
+- Only get's newly added files.
+
+Note: If something goes wrong, or a file was modified and needs
+to be updated on the target server, the file could be manually
+uploaded. This wouldn't happen too often, but it does happen
+often enough that it could be a hassle.
+
+
+Phase 2
+- gets modified files: Compare the previously downloaded
+  object's modification_date and re-download files that
+  have a newer modification date.
+
+- Archives deleted or modified files.
+  Files removed from the feed are moved into an "archive"
+  directory to be handled/deleted later by hand.
+
+
