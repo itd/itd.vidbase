@@ -24,15 +24,37 @@
 
 
         <h2 i18n:translate="heading_videos">Videos</h2>
-        <dl>
+
             <tal:block repeat="vid view/vids">
-                <dt>
-                    <a tal:attributes="href vid/getURL"
-                       tal:content="vid/Title" />
-                </dt>
-                <dd tal:content="vid/Description" />
+                <h3 tal:content="vid/title">[Video Title]</h3>
+                <p>
+                    <a tal:attributes="href vid/absolute_url"
+                        tal:content="vid/itdvideofile/filename">
+                        [ky20100827.m4v]</a>
+                    <br />
+                    <a tal:attributes="title vid/absolute_url;
+                        href string:${vid/absolute_url}/@@download/itdvideofile/${vid/itdvideofile/filename}">
+                        Download</a> |
+                    <a tal:attributes="href vid/absolute_url">
+                        Edit</a>
+
+<!-- <span tal:replace="vid/absolute_url" />
+
+Target for XML =
+                    <span
+                        tal:replace="context/targeturl"
+                    /><span
+                        tal:replace="vid/itdvideofile/filename"
+                    /><span
+                        tal:replace="context/targeturlsuffix"
+                    />
+-->
+
+                </p>
+
+
             </tal:block>
-        </dl>
+
 
         <div tal:replace="structure provider:plone.belowcontentbody" />
 

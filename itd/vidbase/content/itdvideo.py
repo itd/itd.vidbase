@@ -28,6 +28,6 @@ class IITDVideo(form.Schema):
 
 
 # the view class def
-class View(grok.View):
-    grok.context(IITDVideo)
-    grok.require('zope2.View')
+#class View(grok.View):
+#    grok.context(IITDVideo)
+#    grok.require('zope2.View')

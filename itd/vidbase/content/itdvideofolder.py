@@ -23,8 +23,14 @@ class IITDVideoFolder(form.Schema):
     )
     targeturl = schema.TextLine(
         title=_(u"Target Stream URL"),
-        description=_(u"The URL where the video files will be sourced, \
-                       e.g., rtmp://stream.mandsworks.com/kyod/news/"),
+        description=_(u"The URL prepended to the video file names for playback, \
+                       e.g., 'http://media1.lotteryvideo.com/kyod/mp4:'  "),
+        required=True,
+    )
+    targeturlsuffix = schema.TextLine(
+        title=_(u"Stream URL suffix"),
+        description=_(u"If needed, the URL suffix to each file for playback, \
+                       e.g., '/playlist.m3u8'  "),
         required=True,
     )
 
@@ -33,6 +39,7 @@ class View(grok.View):
     grok.context(IITDVideoFolder)
     grok.require('zope2.View')
 
+    #import pdb; pdb.set_trace()
     def vids(self):
         """Return a catalog search result of vids to show
         """
@@ -40,6 +47,10 @@ class View(grok.View):
         context = aq_inner(self.context)
         catalog = getToolByName(context, 'portal_catalog')
 
-        return catalog(object_provides=IITDVideo.__identifier__,
+        res = catalog(object_provides=IITDVideo.__identifier__,
                        path='/'.join(context.getPhysicalPath()),
                        sort_on='sortable_title')
+
+        #import pdb; pdb.set_trace()
+
+        return  [brain.getObject() for brain in res]

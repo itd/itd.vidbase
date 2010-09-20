@@ -16,8 +16,6 @@
 
         <div tal:replace="structure provider:plone.belowcontenttitle" />
 
-        <p class="documentDescription" tal:content="context/description" />
-
         <div tal:replace="structure provider:plone.abovecontentbody" />
 
         <div tal:content="structure context/itdvideo" />
