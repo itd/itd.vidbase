@@ -4,12 +4,23 @@
      xmlns:cc="http://web.resource.org/cc/" version="2.0">
 
     <channel>
-        <description>Recent Drawings</description>
+        <description
+            tal:content="view/foldername">
+                [Recent Drawings]</description>
+
+        <tal:itemblock
+            tal:define="items view/items"
+            tal:repeat="item for items"
+            >
             <item>
-                <title>August 20, 2010</title>
+                <title
+                    tal:content="item/Title"
+                    >[September 1, 2010]</title>
                     <enclosure
-                        url="rtmp://xml.site.com/path/filename.m4v"/>
+                        url="[http://kyxml.mandsworks.com/ky/od/]+[ky20100901.m4v]"/>
             </item>
+        </tal:itemblock>
+
     </channel>
 </rss>
 
