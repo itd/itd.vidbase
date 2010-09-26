@@ -3,6 +3,10 @@ from zope import schema
 from plone.namedfile import field as namedfile
 
 from plone.directives import form, dexterity
+from zope.app.container.interfaces import IObjectAddedEvent
+from Products.CMFCore.utils import getToolByName
+
+from datetime import datetime
 
 from itd.vidbase import _
 
@@ -26,6 +30,23 @@ class IITDVideo(form.Schema):
         required=True,
     )
 
+    showdate = schema.Date(
+        title=_("Show Date"),
+    )
+
+@form.default_value(field=IITDVideo['showdate'])
+def showdateDefaultValue(data):
+    return datetime.today()
+
+@form.default_value(field=IITDVideo['title'])
+def titleDefaultValue(data):
+    today = datetime.today()
+    return today.strftime('%B, %d, %Y')
+    
+@grok.subscribe(IITDVideo, IObjectAddedEvent)
+def autoPublish(itdvideo, event):
+    portal_workflow = getToolByName(itdvideo, 'portal_workflow')
+    portal_workflow.doActionFor(itdvideo, 'publish')
 
 # the view class def
 #class View(grok.View):
