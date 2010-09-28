@@ -17,7 +17,6 @@ class IITDVideo(form.Schema):
 
     # -*- Your Zope schema definitions here ... -*-
 
-
     title = schema.TextLine(
         title=_(u"Title of show"),
         description=_(u"A descriptive title of the video that will be played"),
