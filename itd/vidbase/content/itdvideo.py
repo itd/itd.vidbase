@@ -66,8 +66,7 @@ def write2FS(itdvideo, event):
         try:
             os.makedirs(ITDVIDEO_STORAGE_PATH+parent_path)
         except OSError:
-            msg = 'Error occured creating dir: %s for %s' %
-                (ITDVIDEO_STORAGE_PATH+parent_path, video_obj.filename )
+            msg = 'Error occured creating dir: %s for %s' % (ITDVIDEO_STORAGE_PATH+parent_path, video_obj.filename )
             LOG('itd.vidbase', ERROR, msg)
 
     try:
