@@ -56,7 +56,7 @@ class XMLByShowDateView(ITDBaseXML):
                      'sort_order':'ascending'}
         items = self.context.getFolderContents(contentFilter=itdFilter)
         if self.context.limit > 0:
-            items = items[:limit]
+            items = items[:self.context.limit]
         return items
         
 
@@ -72,7 +72,7 @@ class XMLByFolderOrderView(ITDBaseXML):
                      'review_state':'published',}
         items = self.context.getFolderContents(contentFilter=itdFilter)
         if self.context.limit > 0:
-            items = items[:limit]
+            items = items[:self.context.limit]
         return items
 
 
@@ -89,6 +89,6 @@ class XMLByFolderOrderReversedView(ITDBaseXML):
                      'sort_order':'descending'}
         items = self.context.getFolderContents(contentFilter=itdFilter)
         if self.context.limit > 0:
-            items = items[:limit]
+            items = items[:self.context.limit]
         return items
 

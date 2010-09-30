@@ -16,7 +16,7 @@
             <item tal:define="file_name python:view.getUploadFileName(item.id)">
                 <title tal:content="item/Title">Item title</title>
                 <enclosure url=""
-                    tal:attributes="url string:$target_url/$file_name/$target_url_suffix"/>
+                    tal:attributes="url string:$target_url$file_name$target_url_suffix"/>
             </item>
           </tal:list>
         </tal:itemblock>
