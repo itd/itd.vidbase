@@ -53,7 +53,7 @@ class XMLByShowDateView(ITDBaseXML):
         itdFilter = {'portal_type':['itd.vidbase.itdvideo'],
                      'review_state':'published',
                      'sort_on':'showdate',
-                     'sort_order':'ascending'}
+                     'sort_order':'descending'}
         items = self.context.getFolderContents(contentFilter=itdFilter)
         if self.context.limit > 0:
             items = items[:self.context.limit]
