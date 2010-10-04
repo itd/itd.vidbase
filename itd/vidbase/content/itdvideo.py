@@ -58,10 +58,10 @@ def write2FS(itdvideo, event):
     """ This trigger method writes the video file to file system under path
         specified in config.py
     """
-    parent_path = '/'.join(itdvideo.aq_inner.aq_parent.getPhysicalPath())
+    parent_path = '/'.join(itdvideo.aq_inner.aq_parent.getPhysicalPath()[2:])
     video_obj = itdvideo.itdvideofile
     file_path = ITDVIDEO_STORAGE_PATH+parent_path+video_obj.filename
-    from pdb import set_trace; set_trace()
+    #from pdb import set_trace; set_trace()
     if not os.access(ITDVIDEO_STORAGE_PATH+parent_path, 1):
         try:
             os.makedirs(ITDVIDEO_STORAGE_PATH+parent_path)
