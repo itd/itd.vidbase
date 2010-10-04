@@ -31,7 +31,7 @@ class IITDVideoFolder(form.Schema):
         title=_(u"Stream URL suffix"),
         description=_(u"If needed, the URL suffix to each file for playback, \
                        e.g., '/playlist.m3u8'  "),
-        required=True,
+        required=False,
     )
     limit = schema.Int(
         title=_(u"Item limitation"),
