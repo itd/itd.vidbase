@@ -60,13 +60,14 @@ def write2FS(itdvideo, event):
     """
     parent_path = '/'.join(itdvideo.aq_inner.aq_parent.getPhysicalPath()[2:])
     video_obj = itdvideo.itdvideofile
-    file_path = ITDVIDEO_STORAGE_PATH+parent_path+video_obj.filename
+    path_prefix= '/'.join([ITDVIDEO_STORAGE_PATH, parent_path])
+    file_path = '/'.join([path_prefix, video_obj.filename])
     #from pdb import set_trace; set_trace()
-    if not os.access(ITDVIDEO_STORAGE_PATH+parent_path, 1):
+    if not os.access(path_prefix, 1):
         try:
-            os.makedirs(ITDVIDEO_STORAGE_PATH+parent_path)
+            os.makedirs(path_prefix)
         except OSError:
-            msg = 'Error occured creating dir: %s for %s' % (ITDVIDEO_STORAGE_PATH+parent_path, video_obj.filename )
+            msg = 'Error occured creating dir: %s for %s' % (path_prefix, video_obj.filename )
             LOG('itd.vidbase', ERROR, msg)
 
     try:
