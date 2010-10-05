@@ -10,9 +10,9 @@
     <!-- Include configuration for dependencies listed in setup.py -->
     <includeDependencies package="." />
 
-    <!-- gimme some skins, yo! -->
+    <!-- gimme some skins, yo!
     <include file="skins.zcml" />
-    
+     -->
     <include package=".browser" />
 
     <!-- Grok the package to initialize schema interfaces and content classes -->
