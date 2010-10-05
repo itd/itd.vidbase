@@ -36,6 +36,7 @@ class IITDVideoFolder(form.Schema):
     limit = schema.Int(
         title=_(u"Item limitation"),
         description=(u"Limit the number of items of folder's feeds. Enter 0 or leave blank for disable limitation."),
+        required=False,
     )
 
 #
