@@ -8,6 +8,7 @@
   -->
 <object name="portal_types" meta_type="Plone Types Tool">
   <!-- -*- extra stuff goes here -*- -->
+  <object name="itd.vidbase.iphoneannounce" meta_type="Dexterity FTI" />
   <object name="itd.vidbase.itdvideo" meta_type="Dexterity FTI" />
   <object name="itd.vidbase.itdvideofolder" meta_type="Dexterity FTI" />
 </object>
