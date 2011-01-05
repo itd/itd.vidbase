@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '0.1'
+version = open('itd/vidbase/version.txt').read().strip()
 
 setup(name='itd.vidbase',
       version=version,
@@ -29,6 +29,7 @@ setup(name='itd.vidbase',
           'collective.autopermission',
           'plone.formwidget.namedfile',
           'plone.namedfile[blobs]',
+          'urbanairship',
       # -*- Extra requirements: -*-
       ],
       entry_points="""
