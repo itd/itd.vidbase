@@ -3,6 +3,7 @@ from zope import schema
 from plone.namedfile import field as namedfile
 from z3c.relationfield.schema import RelationChoice, RelationList
 from plone.formwidget.contenttree import ObjPathSourceBinder
+import urbanairship
 
 from plone.directives import form, dexterity
 
@@ -25,7 +26,6 @@ class Iiphoneannounce(form.Schema):
         required=False,
     )
 
-
     alert = schema.Text(
         title=_(u"alert"),
         description=_(u"The text that's sent to the iPhone"),
@@ -35,6 +35,12 @@ class Iiphoneannounce(form.Schema):
     badge = schema.TextLine(
         title=_(u"badge"),
         description=_(u"Do not edit this unless you know exactly what you are doing!"),
+        required=False,
+    )
+
+    liveurl = schema.TextLine(
+        title=_(u"Live Streaming Media Link"),
+        description=_(u"The link for the media player to play the live stream, e.g., http://media.mandsworks.com/kylive/kylive.sdp/playlist.m3u8"),
         required=False,
     )
 
@@ -55,4 +61,25 @@ class Iiphoneannounce(form.Schema):
         description=_(u"Come on... haven't you figured it out by now? Don't touch, monkey boy!"),
         required=False,
     )
+
+
+class View(grok.View):
+    grok.context(Iiphoneannounce)
+    grok.require('zope2.View')
+
+    #import pdb; pdb.set_trace()
+    def ua_json(self):
+        """ returns the json payload
+        """
+
+        context = aq_inner(self.context)
+        #import pdb; pdb.set_trace()
+#{"aps": {"badge": 0, "alert": "View the Live KY Lottery Drawing?", "sound": "its_time_to_play.aif"},"url": "http://media.mandsworks.com/kylive/kylive.sdp/playlist.m3u8"}
+        badge = context.badge
+        alert = context.alert
+        appkey = context.appkey
+        appmaster = context.appmaster
+        liveurl = context.liveurl
+        payload = '{"aps": {"badge": badge, "alert": alert, "sound": soundalert}, "url": liveurl}'
+        return payload
 

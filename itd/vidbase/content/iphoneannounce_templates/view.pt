@@ -27,14 +27,18 @@
         <h2 i18n:translate="title">Push Notification to iPhones</h2>
 
 
-        <h3 tal:content="title">[Video Title]</h3>
-        <p>
-        <img id="big-red-button" src="big-red-button.png" />
-        alert
-        sound
-        badge
+        <h3 tal:content="context/title">[Video Title]</h3>
 
-        </p>
+        <img id="big-red-button" src="big-red-button.png" />
+        <ul>
+
+            <li tal:content="context/alert"> soundalert </li>
+            <li tal:content="context/appkey"> appkey </li>
+            <li tal:content="context/appmaster"> appmaster </li>
+            <li tal:content="context/liveurl"> liveurl </li>
+            <li XXXtal:content="context/ua_json"> ua_json </li>
+        </ul>
+
 
 
 

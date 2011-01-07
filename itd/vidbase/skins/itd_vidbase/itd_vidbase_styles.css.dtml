@@ -1,0 +1,7 @@
+.field input[type="text"] {
+    width: 250px;
+}
+#form-widgets-liveurl {
+    width: 500px;
+}
+
