@@ -1,51 +1,72 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
-      xmlns:tal="http://xml.zope.org/namespaces/tal"
-      xmlns:metal="http://xml.zope.org/namespaces/metal"
-      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-      lang="en"
-      metal:use-macro="context/main_template/macros/master"
-      i18n:domain="itd.vidbase">
+    xmlns:tal="http://xml.zope.org/namespaces/tal"
+    xmlns:metal="http://xml.zope.org/namespaces/metal"
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+    lang="en"
+    metal:use-macro="context/main_template/macros/master"
+    i18n:domain="itd.vidbase">
 <body>
 
 <metal:main fill-slot="main">
-    <tal:main-macro metal:define-macro="main"
-        tal:define="toLocalizedTime nocall:context/@@plone/toLocalizedTime">
-
-        <div tal:replace="structure provider:plone.abovecontenttitle" />
-
-        <h1 class="documentFirstHeading" tal:content="context/title" />
+<tal:main-macro metal:define-macro="main"
+    tal:define="toLocalizedTime nocall:context/@@plone/toLocalizedTime">
 
 
-        <div tal:replace="structure provider:plone.belowcontenttitle" />
+    <div tal:replace="structure provider:plone.abovecontenttitle" />
 
-        <p class="documentDescription" tal:content="context/description" />
-
-        <tal:comment tal:replace="nothing">
-        <div tal:replace="structure provider:plone.abovecontentbody" />
-        </tal:comment>
-
-        <h2 i18n:translate="title">Push Notification to iPhones</h2>
+    <h1 class="documentFirstHeading" tal:content="context/title" />
 
 
-        <h3 tal:content="context/title">[Video Title]</h3>
+    <div tal:replace="structure provider:plone.belowcontenttitle" />
 
-        <img id="big-red-button" src="big-red-button.png" />
-        <ul>
+    <p class="documentDescription" tal:content="context/description" />
 
-            <li tal:content="context/alert"> soundalert </li>
-            <li tal:content="context/appkey"> appkey </li>
-            <li tal:content="context/appmaster"> appmaster </li>
-            <li tal:content="context/liveurl"> liveurl </li>
-            <li XXXtal:content="context/ua_json"> ua_json </li>
-        </ul>
+    <tal:comment tal:replace="nothing">
+    <div tal:replace="structure provider:plone.abovecontentbody" />
+    </tal:comment>
+
+    <h2 i18n:translate="title">Push Notification to iPhones</h2>
 
 
+    <h3 tal:content="context/title">[Video Title]</h3>
+
+
+    <div id="brb">
+    <pre>
+    <a href="pushtourban"
+        id="bigred">
+        Something needs to trigger the on-demand feed to start.
+
+        Toggles "livestatus" value.
+
+        Setting this updates an XML view on save.
+
+        Something like....
+
+        from zope.app.container.interfaces import IObjectModifiedEvent, IObjectAddedEvent
+        urlvalue = ondemandurl
+        if livestatus == 'live'
+        livestatus.xml is populated with liveurl value
+        and is written to the filesystem
+    </a>
+    </pre>
+    </div>
+
+    <ul>
+        <li tal:content="context/alert"> soundalert </li>
+        <li tal:content="context/appkey"> appkey </li>
+        <li tal:content="context/appmaster"> appmaster </li>
+        <li tal:content="context/liveurl"> liveurl </li>
+        <li XXXtal:content="context/ua_json"> ua_json </li>
+    </ul>
 
 
 
-        <div tal:replace="structure provider:plone.belowcontentbody" />
 
-    </tal:main-macro>
+
+    <div tal:replace="structure provider:plone.belowcontentbody" />
+
+</tal:main-macro>
 </metal:main>
 
 </body>

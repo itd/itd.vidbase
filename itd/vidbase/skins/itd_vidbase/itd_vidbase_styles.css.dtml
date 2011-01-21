@@ -1,7 +1,25 @@
 .field input[type="text"] {
     width: 250px;
 }
-#form-widgets-liveurl {
+#form-widgets-liveurl,
+#form-widgets-ondemandurl {
     width: 500px;
 }
 
+
+a#bigred {
+    height: 512px;
+    width: 512px;
+    background: url("big-red-button.png") no-repeat 0 0 white;
+    display: inline-block;
+    text-decoration: none;
+}
+
+a#bigred:active{
+    background: url("big-red-button-down.png") no-repeat 0 0 white;
+}
+
+#content pre {
+background-color: white;
+color: black;
+}
