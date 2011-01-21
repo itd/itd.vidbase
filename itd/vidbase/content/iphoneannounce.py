@@ -11,7 +11,7 @@ from itd.vidbase import _
 
 livestatus_vocab = SimpleVocabulary((
     SimpleTerm(title=u'Play the Live Stream', value="live"),
-    SimpleTerm(title=u'Live Off', value='od'),
+    SimpleTerm(title=u'Live Off', value='off'),
     ))
 
 
@@ -44,8 +44,8 @@ class Iiphoneannounce(form.Schema):
         required=False,
         )
 
-    ondemandurl = schema.TextLine(
-        title=_(u"On-demand URL"),
+    offairurl = schema.TextLine(
+        title=_("Off-air URL"),
         description=_(u"When the live stream is not playing, this will play http://media.mandsworks.com/vod/nokylive.m4v/playlist.m3u8"),
         required=False,
         )
