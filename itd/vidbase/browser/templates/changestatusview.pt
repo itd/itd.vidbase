@@ -24,46 +24,16 @@
     <tal:comment tal:replace="nothing">
     <div tal:replace="structure provider:plone.abovecontentbody" />
     </tal:comment>
-
-    <h2 i18n:translate="title">Push Notification to iPhones</h2>
-
-
-    <h3 tal:content="context/title">[Video Title]</h3>
-
-
-    <div id="brb">
-    <pre>
-    <a href="pushtourban"
-        id="bigred">
-        Something needs to trigger the on-demand feed to start.
-
-        Toggles "livestatus" value.
-
-        Setting this updates an XML view on save.
-
-        Something like....
-
-        from zope.app.container.interfaces import IObjectModifiedEvent, IObjectAddedEvent
-        urlvalue = ondemandurl
-        if livestatus == 'live'
-        livestatus.xml is populated with liveurl value
-        and is written to the filesystem
-    </a>
-    </pre>
-    </div>
-
-    <ul>
-        <li tal:content="context/alert"> soundalert </li>
-        <li tal:content="context/appkey"> appkey </li>
-        <li tal:content="context/appmaster"> appmaster </li>
-        <li tal:content="context/liveurl"> liveurl </li>
-        <li XXXtal:content="context/ua_json"> ua_json </li>
-    </ul>
-
-
-
-
-
+    <form action="">     
+        <select size="1" class="select-widget" name="livestatus" id="livestatus">
+            <option  tal:attributes="selected python: (context.livestatus == 'live') and 'selected' or ''"
+                     value="live">Play the Live Stream</option>
+            <option value="off" 
+                    tal:attributes="selected python: (context.livestatus == 'off') and 'selected' or ''">Live Off</option>
+        </select>
+        <input type="hidden" value="1" name="form.submitted" >
+        <input type="submit" name="form.submit" value="Change" />
+    </form>
     <div tal:replace="structure provider:plone.belowcontentbody" />
 
 </tal:main-macro>

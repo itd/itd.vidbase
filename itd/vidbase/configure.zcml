@@ -12,6 +12,7 @@
     <includeDependencies package="." />
 
     <include package=".browser" />
+    <!-- include package=".adapters" / -->
 
     <!-- Grok the package to initialize schema interfaces and content classes -->
     <grok:grok package="." />

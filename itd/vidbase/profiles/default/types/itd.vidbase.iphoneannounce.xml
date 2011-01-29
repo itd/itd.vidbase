@@ -18,7 +18,7 @@
  <property name="schema">itd.vidbase.content.iphoneannounce.Iiphoneannounce</property>
 
  <!-- class used for content items -->
- <property name="klass">plone.dexterity.content.Item</property>
+ <property name="klass">itd.vidbase.content.iphoneannounce.Iphoneannounce</property>
 <!--
   <property name="product">itd.vidbase</property>
   <property name="factory">addiphoneannounce</property>
@@ -29,7 +29,7 @@
  </property>
 
   <!-- View information -->
-  <property name="default_view">view</property>
+  <property name="default_view">change-status</property>
   <property name="default_view_fallback">False</property>
   <property name="view_methods">
     <element value="base_view" />

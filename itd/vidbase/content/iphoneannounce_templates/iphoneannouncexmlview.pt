@@ -1,0 +1,16 @@
+<rss xmlns:content="http://purl.org/rss/1.0/modules/content/"
+    xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
+    xmlns:media="http://search.yahoo.com/mrss/"
+    xmlns:cc="http://web.resource.org/cc/" version="2.0">
+   <channel>
+       <description
+           tal:content="context/id">
+               [Title]
+       </description>
+           <item>
+               <title tal:content="context/id">[title]</title>
+               <enclosure url=""
+                   tal:attributes="url view/urlForXml"/>
+           </item>
+   </channel>
+</rss>

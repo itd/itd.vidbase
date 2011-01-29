@@ -1,19 +1,30 @@
 from five import grok
 from zope import schema
-from plone.namedfile import field as namedfile
+import zope.event
+import zope.lifecycleevent
 from z3c.relationfield.schema import RelationChoice, RelationList
 from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
+from zope.lifecycleevent.interfaces import IObjectModifiedEvent
+from zope.app.container.interfaces import IObjectAddedEvent
+from zope.component import getUtility
+from zope.component import getAdapter
+from z3c.form import button, field
+from zLOG import LOG, ERROR
+
+from plone.namedfile import field as namedfile
 from plone.formwidget.contenttree import ObjPathSourceBinder
+from plone.dexterity.content import Item
 from plone.directives import form, dexterity
+
 import urbanairship
 from itd.vidbase import _
-
+from itd.vidbase.config import *
+from itd.vidbase.interfaces import IIphoneAnnounceAdapter
 
 livestatus_vocab = SimpleVocabulary((
     SimpleTerm(title=u'Play the Live Stream', value="live"),
     SimpleTerm(title=u'Live Off', value='off'),
     ))
-
 
 class Iiphoneannounce(form.Schema):
     """
@@ -25,7 +36,7 @@ class Iiphoneannounce(form.Schema):
         label=u"Technical info",
         fields=["badge", "appkey", "appmaster", "appsecret"]
         )
-
+        
     sound = schema.TextLine(
         title=_(u"Sound"),
         description=_(u"The name of the sound file that will be played when the alert is sent"),
@@ -73,26 +84,44 @@ class Iiphoneannounce(form.Schema):
         description=_(u"Set to 'live' when the broadcast is active."),
         vocabulary =  livestatus_vocab,
         )
+        
+@grok.subscribe(Iiphoneannounce, IObjectModifiedEvent)
+def whenModifying(iphoneannounce, event):
+    adapter = IIphoneAnnounceAdapter(iphoneannounce)
+    if iphoneannounce.livestatus == 'live':
+        adapter.push_ua()
 
+@grok.subscribe(Iiphoneannounce, IObjectAddedEvent)
+def whenAdding(iphoneannounce, event):
+    adapter = IIphoneAnnounceAdapter(iphoneannounce)
+    if iphoneannounce.livestatus == 'live':
+        adapter.push_ua()
 
-class View(grok.View):
-    grok.context(Iiphoneannounce)
-    grok.require('zope2.View')
-
-    #import pdb; pdb.set_trace()
+class Iphoneannounce(Item):    
+    """Custom object's methods
+    """
     def ua_json(self):
         """ returns the json payload
         """
-
-        context = aq_inner(self.context)
-        #import pdb; pdb.set_trace()
-        #{"aps": {"badge": 0, "alert": "View the Live KY Lottery Drawing?",
-        #"sound": "its_time_to_play.aif"},
-        #"url": "http://media.mandsworks.com/kylive/kylive.sdp/playlist.m3u8"}
-        alert = context.alert
-        appkey = context.appkey
-        appmaster = context.appmaster
-        liveurl = context.liveurl
-        payload = '{"aps": {"alert": alert, "sound": soundalert}, "url": liveurl}'
+        sound = self.sound
+        alert = self.alert
+        appkey = self.appkey
+        appmaster = self.appmaster
+        liveurl = self.liveurl
+        payload = {"aps": {"alert": alert, "sound": sound}, "url": liveurl} 
         return payload
+    
+            
+class IphoneAnnounceXmlView(grok.View):
+    grok.context(Iiphoneannounce)
+    grok.require('zope2.View')
+    grok.name('iphoneannounce.xml')
+    
+    def urlForXml(self):
+        obj = self.context
+        if obj.livestatus == 'live':
+            return obj.liveurl
+        else:
+            return obj.offairurl
+       
 

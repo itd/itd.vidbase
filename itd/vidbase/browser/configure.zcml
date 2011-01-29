@@ -32,4 +32,12 @@
       template="templates/itdvideofolder_xml.pt"
   />        
 
+  <browser:page
+      for="itd.vidbase.content.iphoneannounce.Iiphoneannounce"
+      name="change-status"
+      class="itd.vidbase.browser.changelivestatus.ChangeLiveStatusView"
+      permission="zope.Public"
+      allowed_interface="itd.vidbase.browser.changelivestatus.IChangeLiveStatusView"
+  />        
+  
 </configure>
