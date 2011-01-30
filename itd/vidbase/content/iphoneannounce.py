@@ -22,8 +22,8 @@ from itd.vidbase.config import *
 from itd.vidbase.interfaces import IIphoneAnnounceAdapter
 
 livestatus_vocab = SimpleVocabulary((
-    SimpleTerm(title=u'Play the Live Stream', value="live"),
-    SimpleTerm(title=u'Live Off', value='off'),
+    SimpleTerm(title=u'Live Stream - On-Air!!!', value="live"),
+    SimpleTerm(title=u'off-air', value='off'),
     ))
 
 class Iiphoneannounce(form.Schema):
@@ -32,11 +32,22 @@ class Iiphoneannounce(form.Schema):
     """
 
     # -*- Your Zope schema definitions here ... -*-
+    title = schema.TextLine(
+        title=_(u"Title"),
+        description=_(u'A short descriptive title for this iPhone announcement, e.g., "NY-Announce"'),
+        required=True,
+    )
+
     form.fieldset('technical',
         label=u"Technical info",
         fields=["badge", "appkey", "appmaster", "appsecret"]
         )
-        
+
+    form.fieldset('payload',
+        label=u"Payload Data",
+        fields=["sound", "alert", "liveurl", "offairurl"]
+        )
+
     sound = schema.TextLine(
         title=_(u"Sound"),
         description=_(u"The name of the sound file that will be played when the alert is sent"),
@@ -84,7 +95,7 @@ class Iiphoneannounce(form.Schema):
         description=_(u"Set to 'live' when the broadcast is active."),
         vocabulary =  livestatus_vocab,
         )
-        
+
 @grok.subscribe(Iiphoneannounce, IObjectModifiedEvent)
 def whenModifying(iphoneannounce, event):
     adapter = IIphoneAnnounceAdapter(iphoneannounce)
@@ -97,31 +108,31 @@ def whenAdding(iphoneannounce, event):
     if iphoneannounce.livestatus == 'live':
         adapter.push_ua()
 
-class Iphoneannounce(Item):    
+class Iphoneannounce(Item):
     """Custom object's methods
     """
-    def ua_json(self):
-        """ returns the json payload
-        """
-        sound = self.sound
-        alert = self.alert
-        appkey = self.appkey
-        appmaster = self.appmaster
-        liveurl = self.liveurl
-        payload = {"aps": {"alert": alert, "sound": sound}, "url": liveurl} 
-        return payload
-    
-            
+##    def ua_json(self):
+##        """ returns the json payload
+##        """
+##        sound = self.sound
+##        alert = self.alert
+##        appkey = self.appkey
+##        appmaster = self.appmaster
+##        liveurl = self.liveurl
+##        payload = {"aps": {"alert": alert, "sound": sound}, "url": liveurl}
+##        return payload
+
+
 class IphoneAnnounceXmlView(grok.View):
     grok.context(Iiphoneannounce)
     grok.require('zope2.View')
     grok.name('iphoneannounce.xml')
-    
+
     def urlForXml(self):
         obj = self.context
         if obj.livestatus == 'live':
             return obj.liveurl
         else:
             return obj.offairurl
-       
+
 
