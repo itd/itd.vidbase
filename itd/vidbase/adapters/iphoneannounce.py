@@ -21,17 +21,12 @@ class IphoneAnnounceAdapter(grok.Adapter):
         sound = obj.sound or ""
         alert = obj.alert
         liveurl = obj.liveurl
-
         payload = {"aps": {"alert": alert, "sound": sound}, "url": liveurl}
 
-#        import pdb; pdb.set_trace()
-
-#        ua_json = obj.ua_json()
         try:
             airship = urbanairship.Airship(appkey, appmaster)
             airship.broadcast(payload)
+
         except:
             LOG('itd.vidbase:', ERROR, '%s - Failure to push payload to UA' %self.context.id)
-
-
 
