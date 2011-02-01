@@ -8,6 +8,8 @@ fetch_xmls.py
 #import os
 #import re
 #import shutil
+import time
+import datetime
 import urllib
 
 kytargetdir = '/home/msworks/www/kyxml/'
@@ -22,6 +24,9 @@ xmls = [
     (kyurlprefix+'desktop-news/byShowDate.xml',kytargetdir,'desk_news.xml'),
     ]
 
+def getNow():
+  """Just return the current time for timestamping logs"""
+  return datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 def fetchxmldata(xmlsrc):
     """"""
@@ -42,10 +47,13 @@ def createfiles(xmls):
             f = open(targetpath+outfile,'w')
             f.write(data)
             f.close()
-            print "got %s%s" % (xmlsrc,targetpath)
+            print "%s; got %s" % (getNow(), outfile)
+
 
 def main():
-    createfiles(xmls)
+    while 1 == 1:
+        createfiles(xmls)
+        time.sleep(90)
 
 
 if __name__ == '__main__':
