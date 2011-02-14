@@ -1,3 +1,7 @@
+/* <dtml-with base_properties> (do not remove this :) */
+/* <dtml-call "REQUEST.set('portal_url', portal_url())"> (not this either :) */
+
+
 .field input[type="text"] {
     width: 250px;
 }
@@ -10,16 +14,29 @@
 a#bigred {
     height: 512px;
     width: 512px;
-    background: url("big-red-button.png") no-repeat 0 0 white;
+    background: url(&dtml-portal_url;/big-red-button.png) no-repeat 0 0 white;
     display: inline-block;
     text-decoration: none;
 }
 
 a#bigred:active{
-    background: url("big-red-button-down.png") no-repeat 0 0 white;
+    background: url(&dtml-portal_url;/big-red-button-down.png) no-repeat 0 0 white;
 }
 
 #content pre {
 background-color: white;
 color: black;
 }
+
+
+.onoffair {
+  width: 250px;
+  display: block;
+}
+
+
+
+
+
+
+/* </dtml-with> */

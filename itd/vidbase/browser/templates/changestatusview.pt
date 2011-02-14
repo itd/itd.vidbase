@@ -5,6 +5,7 @@
     lang="en"
     metal:use-macro="context/main_template/macros/master"
     i18n:domain="itd.vidbase">
+
 <body>
 
 <metal:main fill-slot="main">
@@ -24,13 +25,40 @@
     <tal:comment tal:replace="nothing">
     <div tal:replace="structure provider:plone.abovecontentbody" />
     </tal:comment>
-    <form action="">     
+    <form action="">
         <select size="1" class="select-widget" name="livestatus" id="livestatus">
             <option  tal:attributes="selected python: (context.livestatus == 'live') and 'selected' or ''"
                      value="live">Play the Live Stream</option>
-            <option value="off" 
+            <option value="off"
                     tal:attributes="selected python: (context.livestatus == 'off') and 'selected' or ''">Live Off</option>
         </select>
+
+
+
+		<div class="onoffair">
+
+			<label for="onoffair">Is it On-Air or Off-Air???
+				<span
+				tal:condition="python: (context.onoffair)">checked
+				</span>
+			</label>
+
+			<input tal:attributes="checked python: (context.onoffair);"
+			id="onoffair-0"
+			name="onoffair:list"
+			type="checkbox"
+			value="1"
+			>
+
+			<input type="hidden"
+			name="onoffair-empty-marker"
+			value="1"
+			originalvalue="1"/>
+
+		</div>
+
+
+
         <input type="hidden" value="1" name="form.submitted" >
         <input type="submit" name="form.submit" value="Change" />
     </form>

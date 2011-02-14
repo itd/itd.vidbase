@@ -79,21 +79,26 @@ class Iiphoneannounce(form.Schema):
         )
 
     appmaster = schema.TextLine(
-        title=_(u"app master"),
-        description=_(u"Uh, uh, uhh... only if you know exactly what you are doing!"),
-        required=False,
+        title = _(u"app master"),
+        description = _(u"Uh, uh, uhh... only if you know exactly what you are doing!"),
+        required = False,
         )
 
     appsecret = schema.TextLine(
-        title=_(u"app secret"),
-        description=_(u"Come on... haven't you figured it out by now? Don't touch, monkey boy!"),
+        title = _(u"app secret"),
+        description = _(u"Come on... haven't you figured it out by now? Don't touch, monkey boy!"),
         required=False,
         )
 
     livestatus = schema.Choice(
-        title=_(u"Live Status"),
-        description=_(u"Set to 'live' when the broadcast is active."),
+        title = _(u"Live Status"),
+        description = _(u"Set to 'live' when the broadcast is active."),
         vocabulary =  livestatus_vocab,
+        )
+
+    onoffair = schema.Bool(
+        title = _(u"On- or Off-Air"),
+        description = _(u""),
         )
 
 @grok.subscribe(Iiphoneannounce, IObjectModifiedEvent)
@@ -130,7 +135,7 @@ class IphoneAnnounceXmlView(grok.View):
 
     def urlForXml(self):
         obj = self.context
-        if obj.livestatus == 'live':
+        if obj.onoffair == True:
             return obj.liveurl
         else:
             return obj.offairurl

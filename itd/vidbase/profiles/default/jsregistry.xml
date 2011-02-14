@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!-- This file holds the setup configuration for the portal_javascripts tool.
+    -->
+
+<object name="portal_javascripts">
+    <javascript
+        id="iphone-style-checkboxes.js"
+        cacheable="True" compression="safe" cookable="False"
+        enabled="True" expression=""  inline="True"
+        />
+    <javascript
+        id="vidbase_extras.js"
+        cacheable="True" compression="safe" cookable="False"
+        enabled="True" expression=""  inline="True"
+        />
+</object>
