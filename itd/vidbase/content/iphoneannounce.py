@@ -127,6 +127,14 @@ class Iphoneannounce(Item):
 ##        payload = {"aps": {"alert": alert, "sound": sound}, "url": liveurl}
 ##        return payload
 
+class UberSlider(dexterity.DisplayForm):
+    """ dexterity.DisplayForm A printable view for a survey
+    """
+
+    grok.context(Iiphoneannounce)
+    grok.require('zope2.View')
+    grok.name('uberslider')
+
 
 class IphoneAnnounceXmlView(grok.View):
     grok.context(Iiphoneannounce)
