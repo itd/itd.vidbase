@@ -1,10 +1,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
-      xmlns:tal="http://xml.zope.org/namespaces/tal"
-      xmlns:metal="http://xml.zope.org/namespaces/metal"
-      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-      lang="en"
-      metal:use-macro="context/main_template/macros/master"
-      i18n:domain="itd.vidbase">
+    xmlns:tal="http://xml.zope.org/namespaces/tal"
+    xmlns:metal="http://xml.zope.org/namespaces/metal"
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+    lang="en"
+    metal:use-macro="context/main_template/macros/master"
+    i18n:domain="itd.vidbase">
 
 <body>
 
@@ -12,8 +12,31 @@
     <tal:main-macro metal:define-macro="main">
 
 
-        <tal:comment tal:replace="nothing">
-        </tal:comment>
+    <tal:comment tal:replace="nothing">
+    </tal:comment>
+
+    <div class="onoffair">
+
+    <label for="onoffair">Is it On-Air or Off-Air???
+        <span
+        tal:condition="python: (context.onoffair)">checked
+        </span>
+    </label>
+
+    <input tal:attributes="checked python: (context.onoffair);"
+    id="onoffair-0"
+    name="onoffair:list"
+    type="checkbox"
+    value="1"
+    />
+
+    <input type="hidden"
+    name="onoffair-empty-marker"
+    value="1"
+    originalvalue="1"
+    />
+
+    </div>
 
     </tal:main-macro>
 </metal:main>
