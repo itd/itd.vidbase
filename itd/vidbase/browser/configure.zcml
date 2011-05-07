@@ -4,7 +4,31 @@
     xmlns:plone="http://namespaces.plone.org/plone"
     i18n_domain="itd.vidbase">
 
-  <!-- Sunburst special view -->
+  <browser:page
+      for="*"
+      name="toSmilByShowDate.xml"
+      class="itd.vidbase.browser.itdvfolderxml.XMLByShowDateView"
+      permission="zope.Public"
+      allowed_interface="itd.vidbase.browser.itdvfolderxml.IXMLByShowDateView"
+      template="templates/itdvideofolder_smil_xml.pt"
+  />
+  <browser:page
+      for="*"
+      name="toSmilByFolderOrder.xml"
+      class="itd.vidbase.browser.itdvfolderxml.XMLByFolderOrderView"
+      permission="zope.Public"
+      allowed_interface="itd.vidbase.browser.itdvfolderxml.IXMLByFolderOrderView"
+      template="templates/itdvideofolder_smil_xml.pt"
+  />
+  <browser:page
+      for="*"
+      name="toSmilByFolderOrderReversed.xml"
+      class="itd.vidbase.browser.itdvfolderxml.XMLByFolderOrderReversedView"
+      permission="zope.Public"
+      allowed_interface="itd.vidbase.browser.itdvfolderxml.IXMLByFolderOrderReversedView"
+      template="templates/itdvideofolder_smil_xml.pt"
+  />
+
   <browser:page
       for="*"
       name="byShowDate.xml"
@@ -12,8 +36,7 @@
       permission="zope.Public"
       allowed_interface="itd.vidbase.browser.itdvfolderxml.IXMLByShowDateView"
       template="templates/itdvideofolder_xml.pt"
-  />                
-
+  />
   <browser:page
       for="*"
       name="byFolderOrder.xml"
@@ -21,8 +44,7 @@
       permission="zope.Public"
       allowed_interface="itd.vidbase.browser.itdvfolderxml.IXMLByFolderOrderView"
       template="templates/itdvideofolder_xml.pt"
-  />        
-
+  />
   <browser:page
       for="*"
       name="byFolderOrderReversed.xml"
@@ -30,7 +52,7 @@
       permission="zope.Public"
       allowed_interface="itd.vidbase.browser.itdvfolderxml.IXMLByFolderOrderReversedView"
       template="templates/itdvideofolder_xml.pt"
-  />        
+  />
 
   <browser:page
       for="itd.vidbase.content.iphoneannounce.Iiphoneannounce"
@@ -38,6 +60,6 @@
       class="itd.vidbase.browser.changelivestatus.ChangeLiveStatusView"
       permission="zope.Public"
       allowed_interface="itd.vidbase.browser.changelivestatus.IChangeLiveStatusView"
-  />        
-  
+  />
+
 </configure>

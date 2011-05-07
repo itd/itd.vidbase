@@ -1,0 +1,26 @@
+<rss xmlns:content="http://purl.org/rss/1.0/modules/content/"
+     xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
+     xmlns:media="http://search.yahoo.com/mrss/"
+     xmlns:cc="http://web.resource.org/cc/" version="2.0">
+
+    <channel>
+        <description
+            tal:content="view/folderName">
+                [Recent Drawings]</description>
+
+        <tal:itemblock
+            tal:define="items view/subItems;
+                        target_url view/getTargetURL;
+                        target_url_suffix view/getTargetURLSuffix; ">
+          <tal:list repeat="item items">
+            <item tal:define="file_name python:view.getUploadFileName(item.id)">
+                <title tal:content="item/Title">Item title</title>
+                <enclosure url=""
+                    tal:attributes="url string:$target_url$file_name.smil"/>
+            </item>
+          </tal:list>
+        </tal:itemblock>
+
+    </channel>
+</rss>
+
