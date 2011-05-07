@@ -1,4 +1,6 @@
 import os
+from string import Template
+
 from five import grok
 from zope import schema
 from plone.namedfile import field as namedfile
@@ -83,6 +85,23 @@ def write2FS(itdvideo, event):
     except IOError:
         LOG('itd.vidbase', ERROR, 'Error occurs when creating file on disk '+video_obj.filename)
 
+    #write the .smil file, too.
+    smil_data='''<smil><head></head>
+    <body>
+        <switch>
+            <video src="mp4:${vid}" system-bitrate="500000"/>
+            <video src="mp4:${vid}" system-bitrate="64000">
+                <param name="audioOnly" value="TRUE" valuetype="data"/>
+            </video>
+        </switch>
+    </body></smil>
+    '''
+    smil_template = Template(smil_data)
+    strdict = {'vid': video_obj.filename,}
+    smildata = smil_template.substitute(strdict)
+    sf = open(file_path+'.smil', 'w')
+    sf.write(smildata)
+    sf.close()
 
 
 # the view class def
